@@ -27,7 +27,9 @@ if(WIN32 AND MSVC)
 endif()
 set(CMAKE_DEBUG_POSTFIX "_d")
 
-include_directories(${THIRDPARTY_PATH}/SDL2-2.0.3/include)
+include_directories(
+    ${SRC_PATH}
+    ${THIRDPARTY_PATH}/SDL2-2.0.3/include)
 
 add_executable(GemMiner ${SRC} ${HDR})
 target_link_libraries(GemMiner SDL2)
