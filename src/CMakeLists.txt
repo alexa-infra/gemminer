@@ -33,3 +33,7 @@ include_directories(
 
 add_executable(GemMiner ${SRC} ${HDR})
 target_link_libraries(GemMiner SDL2)
+
+configure_file(
+    ${CMAKE_SOURCE_DIR}/cmake/project.vcxproj.user.in
+    ${CMAKE_CURRENT_BINARY_DIR}/GemMiner.vcxproj.user @ONLY)
