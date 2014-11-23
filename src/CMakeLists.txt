@@ -8,8 +8,12 @@ file(GLOB BASE_SRC ${SRC_PATH}/base/*.cpp)
 file(GLOB BASE_HDR ${SRC_PATH}/base/*.h)
 source_group("base" FILES ${BASE_SRC} ${BASE_HDR})
 
-set(SRC ${MAIN_SRC} ${BASE_SRC})
-set(HDR ${MAIN_HDR} ${BASE_HDR})
+file(GLOB GAME_SRC ${SRC_PATH}/game/*.cpp)
+file(GLOB GAME_HDR ${SRC_PATH}/game/*.h)
+source_group("game" FILES ${GAME_SRC} ${GAME_HDR})
+
+set(SRC ${MAIN_SRC} ${BASE_SRC} ${GAME_SRC})
+set(HDR ${MAIN_HDR} ${BASE_HDR} ${GAME_HDR})
 
 if(UNIX OR MINGW)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Werror -std=gnu++11")
