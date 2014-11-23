@@ -53,10 +53,10 @@ void SDLApp::PumpEvents()
             run_ = false;
             break;
         case SDL_MOUSEBUTTONUP:
-
+            OnMouseUp(event.button.x, event.button.y);
             break;
         case SDL_MOUSEBUTTONDOWN:
-
+            OnMouseDown(event.button.x, event.button.y);
             break;
         case SDL_MOUSEMOTION:
             OnMouseMove(event.motion.x,
@@ -109,6 +109,16 @@ void SDLApp::OnKeyboardDown( u8 key )
 
 void SDLApp::OnKeyboardUp( u8 key )
 {
+}
+
+void SDLApp::OnMouseDown(i32 x, i32 y)
+{
+
+}
+
+void SDLApp::OnMouseUp(i32 x, i32 y)
+{
+
 }
 
 } // namespace base

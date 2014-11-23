@@ -17,6 +17,19 @@ namespace game
         bool removed;
     };
 
+    namespace BoardStates
+    {
+        enum BoardState
+        {
+            Idle = 0,
+            Move,
+            Destroy,
+            MoveGems,
+            Generate
+        };
+    }
+    typedef BoardStates::BoardState BoardState;
+
     class Board
     {
     public:
@@ -25,7 +38,7 @@ namespace game
 
         void clear();
         void fill();
-        void click(float x, float y);
+        void click(int x, int y);
         void update(float dt);
 
     private:
@@ -40,7 +53,7 @@ namespace game
         bool destroyGems(bool animate);
         void move(Tile& a, Tile& b, bool animate);
         void cancelMove(bool animate);
-        void endMove(bool animate);
+        bool endMove(bool animate);
 
     private:
         typedef std::vector<std::vector<Tile>> Tiles;
@@ -54,5 +67,8 @@ namespace game
         int ty_;
         int originX_;
         int originY_;
+        Tile* current_;
+        Tile* next_;
+        BoardState state_;
     };
 }

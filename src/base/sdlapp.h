@@ -17,6 +17,8 @@ public:
 protected:
     virtual void OnFrame(float dt);
     virtual void OnMouseMove( i32 x, i32 y, i32 dx, i32 dy );
+    virtual void OnMouseDown(i32 x, i32 y);
+    virtual void OnMouseUp(i32 x, i32 y);
     virtual void OnReshape( i32 width, i32 height );
     virtual void OnKeyboardDown( u8 key );
     virtual void OnKeyboardUp( u8 key );

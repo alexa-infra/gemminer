@@ -17,6 +17,7 @@ namespace game {
         void Update(float dt);
         void Render();
         virtual void OnFrame(float dt);
+        virtual void OnMouseUp(int x, int y);
 
         Sprite* background_;
         Board* board_;

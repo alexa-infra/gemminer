@@ -36,6 +36,7 @@ void Game::OnFrame(float dt)
 
 void Game::Update(float dt)
 {
+    board_->update(dt);
 }
 
 void Game::Render()
@@ -51,4 +52,9 @@ void Game::Render()
 SDL_Renderer* Game::renderer()
 {
     return renderer_;
+}
+
+void Game::OnMouseUp(int x, int y)
+{
+    board_->click(x, y);
 }
