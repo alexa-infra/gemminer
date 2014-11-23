@@ -2,6 +2,8 @@
 #include "game/render_manager.h"
 #include "game/animation_manager.h"
 #include <cmath>
+#include <string>
+#include <sstream>
 
 using namespace game;
 using namespace base;
@@ -33,6 +35,9 @@ Board::Board(int n, int m)
     tileSize_ = 35;
     width_ = tx_ * tileSize_;
     height_ = ty_ * tileSize_;
+    countScores = true;
+    score = 0;
+    scoreMultiplier = 1;
 
     fill();
     state_ = BoardStates::Idle;
@@ -45,6 +50,7 @@ Board::~Board()
 
 void Board::fill()
 {
+    countScores = false;
     clear();
     tiles_.resize(tx_);
     for (int i = 0; i < tx_; i++)
@@ -69,10 +75,12 @@ void Board::fill()
         generateGems(false);
     }
     animateInitial();
+    countScores = true;
 }
 
 void Board::clear()
 {
+    score = 0;
     layer_->sprites.clear();
     for (int i = 0; i < tiles_.size(); i++)
         for (int j = 0; j < tiles_[i].size(); j++)
@@ -161,7 +169,6 @@ bool Board::destroyGems(bool animate)
         {
             Tile& tile = *match[j];
             tile.removed = true;
-            tile.score += targetSize;
 
             if (animate) {
                 Color c = tile.sprite->color;
@@ -171,6 +178,10 @@ bool Board::destroyGems(bool animate)
             else {
                 tile.sprite->color.a = 0.0f;
             }
+        }
+        if (countScores) {
+            score += 10 * (targetSize - 2) * scoreMultiplier;
+            scoreMultiplier++;
         }
     }
 
@@ -229,6 +240,7 @@ void Board::update(float dt)
             state_ = BoardStates::Destroy;
         }
         else {
+            scoreMultiplier = 1;
             state_ = BoardStates::Idle;
         }
     }
@@ -350,4 +362,11 @@ Tile* Board::findNotEmptyAbove(int iCol, int jRow)
             return &tile;
     }
     return nullptr;
+}
+
+std::string Board::getScoresText() const
+{
+    std::ostringstream ss;
+    ss << getScores();
+    return ss.str();
 }

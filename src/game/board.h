@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <string>
 #include "base/types.h"
 
 namespace game
@@ -13,7 +14,6 @@ namespace game
         int item;
         int i;
         int j;
-        int score;
         bool removed;
     };
 
@@ -40,6 +40,8 @@ namespace game
         void fill();
         void click(int x, int y);
         void update(float dt);
+        int getScores() const { return score; }
+        std::string getScoresText() const;
 
     private:
         void clickOn(Tile& tile);
@@ -67,6 +69,9 @@ namespace game
         int ty_;
         int originX_;
         int originY_;
+        int score;
+        int scoreMultiplier;
+        bool countScores;
         Tile* current_;
         Tile* next_;
         BoardState state_;

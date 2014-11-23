@@ -58,6 +58,7 @@ void Game::Render()
     RenderManager::instance().Render();
 
     font->RenderText(timer_->getText(), 100, 100);
+    font->RenderText(board_->getScoresText(), 100, 150);
 
     SDL_RenderPresent(renderer_);
 }
