@@ -8,6 +8,9 @@ namespace game {
     {
     public:
         Game();
+        ~Game();
+
+        SDL_Renderer* renderer();
     protected:
         void Update(float dt);
         void Render();

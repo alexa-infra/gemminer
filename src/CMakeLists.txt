@@ -33,7 +33,8 @@ set(CMAKE_DEBUG_POSTFIX "_d")
 
 include_directories(
     ${SRC_PATH}
-    ${THIRDPARTY_PATH}/SDL2-2.0.3/include)
+    ${THIRDPARTY_PATH}/SDL2-2.0.3/include
+    ${THIRDPARTY_PATH}/stb)
 
 add_executable(GemMiner ${SRC} ${HDR})
 target_link_libraries(GemMiner SDL2)

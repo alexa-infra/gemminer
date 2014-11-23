@@ -1,0 +1,89 @@
+#include "game/resource_manager.h"
+#include "game/game.h"
+
+#define STBI_FAILURE_USERMSG
+#include "stb_image.c"
+
+#include "SDL.h"
+
+using namespace game;
+using namespace base;
+
+struct TextureInfo
+{
+    i32 Width;
+    i32 Height;
+    i32 ComponentCount;
+};
+
+struct StbiImage
+{
+    StbiImage(const std::string& path, TextureInfo& info) : buffer(NULL)
+    {
+        buffer = stbi_load(path.c_str(), &info.Width, &info.Height, &info.ComponentCount, 0);
+    }
+    ~StbiImage()
+    {
+        if (buffer != NULL)
+            stbi_image_free(buffer);
+    }
+    u8* buffer;
+    bool isOk() const { return buffer != NULL; }
+};
+
+ResourceManager* Singleton<ResourceManager>::instance_ = nullptr;
+
+ResourceManager::ResourceManager(Game* app)
+{
+    renderer_ = app->renderer();
+}
+
+ResourceManager::~ResourceManager()
+{
+    TextureMap::iterator it;
+    for (it = textures_.begin(); it != textures_.end(); ++it)
+    {
+        SDL_DestroyTexture(it->second);
+    }
+}
+
+SDL_Texture* ResourceManager::LoadTexture(const std::string& path)
+{
+    TextureInfo info;
+    StbiImage image(path, info);
+    if (!image.isOk()) {
+        return nullptr;
+    }
+    int rmask, gmask, bmask, amask;
+    if (info.ComponentCount == 3)
+    {
+        rmask = 0x0000ff;
+        gmask = 0x00ff00;
+        bmask = 0xff0000;
+        amask = 0;
+    }
+    else if (info.ComponentCount == 4)
+    {
+        rmask = 0x000000ff;
+        gmask = 0x0000ff00;
+        bmask = 0x00ff0000;
+        amask = 0xff000000;
+    }
+
+    SDL_Surface* surface = SDL_CreateRGBSurfaceFrom(image.buffer, info.Width, info.Height,
+        info.ComponentCount * 8, info.Width * info.ComponentCount, rmask, gmask, bmask, amask);//0x0000ff, 0x00ff00, 0xff0000, 0); //0x000000ff);
+    SDL_PixelFormat * fmt = surface->format;
+    SDL_Texture* tex = SDL_CreateTextureFromSurface(renderer_, surface);
+    SDL_FreeSurface(surface);
+    return tex;
+}
+
+SDL_Texture* ResourceManager::Texture(const std::string& path)
+{
+    TextureMap::iterator it = textures_.find(path);
+    if (it != textures_.end())
+        return it->second;
+    SDL_Texture* tex = LoadTexture(path);
+    textures_[path] = tex;
+    return tex;
+}
