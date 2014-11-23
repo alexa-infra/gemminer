@@ -5,6 +5,7 @@
 #include "game/board.h"
 #include "SDL.h"
 #include "game/sprite_font.h"
+#include "game/timer_display.h"
 
 using namespace game;
 using namespace base;
@@ -23,6 +24,7 @@ Game::Game()
     font = new SpriteFont(renderer_, "data/agencyb.ttf");
 
     board_ = new Board(8, 8);
+    timer_ = new TimerDisplay(60.f);
 }
 
 Game::~Game()
@@ -45,6 +47,7 @@ void Game::Update(float dt)
 {
     AnimationManager::instance().update(dt);
     board_->update(dt);
+    timer_->update(dt);
 }
 
 void Game::Render()
@@ -54,7 +57,7 @@ void Game::Render()
 
     RenderManager::instance().Render();
 
-    font->RenderText("hello world", 100, 100);
+    font->RenderText(timer_->getText(), 100, 100);
 
     SDL_RenderPresent(renderer_);
 }

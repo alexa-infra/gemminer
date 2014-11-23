@@ -5,6 +5,7 @@
 namespace game {
     class Board;
     struct Sprite;
+    class TimerDisplay;
 
     class Game : public ::base::SDLApp
     {
@@ -21,6 +22,7 @@ namespace game {
 
         Sprite* background_;
         Board* board_;
+        TimerDisplay* timer_;
     };
 
 }
