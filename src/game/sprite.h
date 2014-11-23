@@ -35,6 +35,8 @@ namespace game
         Sprite* sprite;
         Vec2 positionFrom;
         Vec2 positionTo;
+
+        SpriteAnimatePosition(float duration, Sprite* s, Vec2 from, Vec2 to);
         
         void setInitial();
         void setFinish();
@@ -46,6 +48,8 @@ namespace game
         Sprite* sprite;
         Color colorFrom;
         Color colorTo;
+
+        SpriteAnimateColor(float duration, Sprite* s, Color from, Color to);
 
         void setInitial();
         void setFinish();

@@ -1,6 +1,7 @@
 #include "game/game.h"
 #include "game/resource_manager.h"
 #include "game/render_manager.h"
+#include "game/animation_manager.h"
 #include "game/board.h"
 #include "SDL.h"
 
@@ -11,6 +12,7 @@ Game::Game()
 {
     ResourceManager::init(this);
     RenderManager::init(this);
+    AnimationManager::init();
     RenderLayer* backgroundLayer = RenderManager::instance().addLayer("background", 1);
     background_ = new Sprite;
     background_->init("data/BackGround.jpg");
@@ -23,6 +25,7 @@ Game::~Game()
 {
     delete background_;
     delete board_;
+    AnimationManager::shutdown();
     RenderManager::shutdown();
     ResourceManager::shutdown();
 }
@@ -36,6 +39,7 @@ void Game::OnFrame(float dt)
 
 void Game::Update(float dt)
 {
+    AnimationManager::instance().update(dt);
     board_->update(dt);
 }
 

@@ -1,5 +1,8 @@
 #pragma once
 
+#include "base/singleton.h"
+#include <vector>
+
 namespace game
 {
     struct BaseAnimation
@@ -12,5 +15,18 @@ namespace game
         virtual void setInitial() = 0;
         virtual void setFinish() = 0;
         virtual void setEasing() = 0;
+    };
+
+    class AnimationManager : public ::base::Singleton<AnimationManager>
+    {
+    public:
+        AnimationManager();
+        ~AnimationManager();
+
+        void add(BaseAnimation* animation);
+        bool empty() const;
+        void update(float dt);
+    private:
+        std::vector<BaseAnimation*> animations_;
     };
 }

@@ -14,6 +14,16 @@ void Sprite::init(const std::string& path)
     h = img.h;
 }
 
+SpriteAnimatePosition::SpriteAnimatePosition(float d, Sprite* s, Vec2 from, Vec2 to)
+{
+    duration = d;
+    clock = 0.0f;
+    sprite = s;
+    positionFrom = from;
+    positionTo = to;
+    setInitial();
+}
+
 void SpriteAnimatePosition::setInitial()
 {
     sprite->position = positionFrom;
@@ -36,6 +46,16 @@ void SpriteAnimatePosition::setEasing()
     newPos.x = linear(clock, positionFrom.x, positionTo.x - positionFrom.x, duration);
     newPos.y = linear(clock, positionFrom.y, positionTo.y - positionFrom.y, duration);
     sprite->position = newPos;
+}
+
+SpriteAnimateColor::SpriteAnimateColor(float d, Sprite* s, Color from, Color to)
+{
+    duration = d;
+    clock = 0.0f;
+    sprite = s;
+    colorFrom = from;
+    colorTo = to;
+    setInitial();
 }
 
 void SpriteAnimateColor::setInitial()

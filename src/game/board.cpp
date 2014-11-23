@@ -1,5 +1,6 @@
 #include "game/board.h"
 #include "game/render_manager.h"
+#include "game/animation_manager.h"
 #include <cmath>
 
 using namespace game;
@@ -13,6 +14,12 @@ std::string spriteNames[spriteCount] = {
     "data/Red.png",
     "data/Yellow.png"
 };
+
+const float Animation_Appear = 0.5f;
+const float Animation_Move = 0.25f;
+const float Animation_Destroy = 0.25f;
+const float Animation_Generate = 0.25f;
+const float Animation_Fall = 0.25f;
 
 Board::Board(int n, int m)
 {
@@ -74,6 +81,7 @@ void Board::clear()
 
 void Board::generateGems(bool animate)
 {
+    AnimationManager& animator = AnimationManager::instance();
     for (int i = 0; i < tx_; i++)
     {
         for (int j = 0; j < ty_; j++)
@@ -89,7 +97,9 @@ void Board::generateGems(bool animate)
                 tile.sprite->position = pos;
                 tile.sprite->color = color;
                 if (animate) {
-
+                    tile.sprite->color.a = 0.0f;
+                    color.a = 1.0f;
+                    animator.add(new SpriteAnimateColor(Animation_Generate, tile.sprite, tile.sprite->color, color));
                 }
                 else {
                     tile.sprite->color.a = 1.0f;
@@ -142,6 +152,7 @@ bool Board::destroyGems(bool animate)
             targets.push_back(target);
     }
 
+    AnimationManager& animator = AnimationManager::instance();
     for (int i = 0; i < targets.size(); i++)
     {
         Match& match = targets[i];
@@ -153,7 +164,9 @@ bool Board::destroyGems(bool animate)
             tile.score += targetSize;
 
             if (animate) {
-
+                Color c = tile.sprite->color;
+                c.a = 0.0f;
+                animator.add(new SpriteAnimateColor(Animation_Destroy, tile.sprite, tile.sprite->color, c));
             }
             else {
                 tile.sprite->color.a = 0.0f;
@@ -166,11 +179,28 @@ bool Board::destroyGems(bool animate)
 
 void Board::animateInitial()
 {
+    AnimationManager& animator = AnimationManager::instance();
+    for (int i = 0; i < tx_; i++)
+    {
+        for (int j = 0; j < ty_; j++)
+        {
+            Tile& tile = tiles_[i][j];
+            Sprite* sprite = tile.sprite;
+            Vec2 endpos = sprite->position;
+            Vec2 beginpos;
+            beginpos.x = (float)(originX_ + i * tileSize_);
+            beginpos.y = (float)(originY_ - 1 * tileSize_);
+            animator.add(new SpriteAnimatePosition(Animation_Appear, sprite, beginpos, endpos));
+        }
+    }
 }
 
 void Board::update(float dt)
 {
-    bool animate = false;
+    if (!AnimationManager::instance().empty())
+        return;
+
+    bool animate = true;
     if (state_ == BoardStates::Idle) {
         if (current_ != nullptr && next_ != nullptr) {
             move(*current_, *next_, animate);
@@ -253,7 +283,9 @@ void Board::move(Tile& a, Tile& b, bool animate)
     std::swap(a.i, b.i);
     std::swap(a.j, b.j);
     if (animate) {
-
+        AnimationManager& animator = AnimationManager::instance();
+        animator.add(new SpriteAnimatePosition(Animation_Move, a.sprite, a.sprite->position, b.sprite->position));
+        animator.add(new SpriteAnimatePosition(Animation_Move, b.sprite, b.sprite->position, a.sprite->position));
     }
     else {
         std::swap(a.sprite->position, b.sprite->position);
@@ -279,6 +311,7 @@ bool Board::endMove(bool animate)
 
 void Board::moveGems(bool animate)
 {
+    AnimationManager& animator = AnimationManager::instance();
     for (int i = 0; i < tx_; i++)
     {
         while (true)
@@ -289,9 +322,9 @@ void Board::moveGems(bool animate)
             Tile* next = findNotEmptyAbove(i, empty->j);
             if (next == nullptr)
                 break;
-            move(*empty, *next, animate);
+            move(*empty, *next, false);
             if (animate) {
-
+                animator.add(new SpriteAnimatePosition(Animation_Fall, empty->sprite, next->sprite->position, empty->sprite->position));
             }
         }
     }
