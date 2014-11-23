@@ -47,13 +47,12 @@ void Game::OnFrame(float dt)
 void Game::Update(float dt)
 {
     if (state_ == GameStates::Start) {
-        timer_->reset(60.0f);
     }
     else if (state_ == GameStates::Play) {
         AnimationManager::instance().update(dt);
         board_->update(dt);
         timer_->update(dt);
-        if (timer_->isFinished()) {
+        if (timer_->isFinished() && AnimationManager::instance().empty()) {
             state_ = GameStates::End;
         }
     }
@@ -101,6 +100,8 @@ void Game::OnMouseUp(int x, int y)
 {
     if (state_ == GameStates::Start) {
         state_ = GameStates::Play;
+        timer_->reset(60.0f);
+        board_->fill();
     }
     else if (state_ == GameStates::Play) {
         board_->click(x, y);

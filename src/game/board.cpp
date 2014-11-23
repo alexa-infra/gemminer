@@ -38,8 +38,6 @@ Board::Board(int n, int m)
     countScores = true;
     score = 0;
     scoreMultiplier = 1;
-
-    fill();
     state_ = BoardStates::Idle;
 }
 
