@@ -7,6 +7,7 @@ namespace game
 {
     struct BaseAnimation
     {
+        virtual ~BaseAnimation(){}
         float clock;
         float duration;
 

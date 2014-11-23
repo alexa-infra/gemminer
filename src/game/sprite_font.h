@@ -19,7 +19,7 @@ public:
     void RenderText(const std::string& text, float x, float y);
 
 private:
-    u32 max_chars_;             //!< maximum text length
+    //u32 max_chars_;             //!< maximum text length
     u32 text_length_;           //!< current text length
     f32 font_height_;           //!< current font height
 

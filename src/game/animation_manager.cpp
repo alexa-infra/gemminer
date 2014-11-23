@@ -2,7 +2,7 @@
 
 using namespace game;
 
-AnimationManager* base::Singleton<AnimationManager>::instance_ = nullptr;
+template<> AnimationManager* base::Singleton<AnimationManager>::instance_ = nullptr;
 
 bool BaseAnimation::update(float dt)
 {

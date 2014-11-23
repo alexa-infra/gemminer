@@ -7,7 +7,7 @@
 using namespace game;
 using namespace base;
 
-RenderManager * Singleton<RenderManager>::instance_ = nullptr;
+template<> RenderManager * Singleton<RenderManager>::instance_ = nullptr;
 
 RenderManager::RenderManager(Game* game)
 {

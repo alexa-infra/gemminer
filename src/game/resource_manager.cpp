@@ -31,7 +31,7 @@ struct StbiImage
     bool isOk() const { return buffer != NULL; }
 };
 
-ResourceManager* Singleton<ResourceManager>::instance_ = nullptr;
+template<> ResourceManager* Singleton<ResourceManager>::instance_ = nullptr;
 
 ResourceManager::ResourceManager(Game* app)
 {
@@ -60,7 +60,7 @@ ImageTexture ResourceManager::LoadTexture(const std::string& path)
     if (!image.isOk()) {
         return ret;
     }
-    int rmask, gmask, bmask, amask;
+    int rmask = 0, gmask = 0, bmask = 0, amask = 0;
     if (info.ComponentCount == 3)
     {
         rmask = 0x0000ff;

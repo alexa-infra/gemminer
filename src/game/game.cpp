@@ -14,8 +14,8 @@ static SpriteFont* font = nullptr;
 
 Game::Game()
 {
-    ResourceManager::init(this);
-    RenderManager::init(this);
+    ResourceManager::init<Game*>(this);
+    RenderManager::init<Game*>(this);
     AnimationManager::init();
     RenderLayer* backgroundLayer = RenderManager::instance().addLayer("background", 1);
     background_ = new Sprite;

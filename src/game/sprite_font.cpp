@@ -21,7 +21,7 @@ public:
             file_.close();
         }
     }
-    u32 FileBinary::size()
+    u32 size()
     {
         file_.seekg(0, std::ios::end);
         u32 s = static_cast<u32>(file_.tellg());
