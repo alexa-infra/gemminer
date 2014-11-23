@@ -1,19 +1,7 @@
 #pragma once
 
 #include "base/platform.h"
-
-#if defined(OS_UNIX) || defined(OS_MINGW)
-#   include <stdint.h>
-#elif defined(OS_WIN)
-#   include <winsdkver.h>
-#   if WINVER_MAXVER >= 0x0602
-#       include <stdint.h>
-#   else
-#       include "stdint/stdint.h"
-#   endif
-#else
-#   error Include stdint.h
-#endif
+#include <stdint.h>
 
 namespace base {
 
@@ -38,46 +26,3 @@ typedef double      f64;
 #endif
 
 } // namespace base
-
-// A macro to disallow the copy constructor and operator= functions
-// This should be used in the private: declarations for a class
-#define DISALLOW_COPY_AND_ASSIGN(TypeName) \
-   TypeName(const TypeName&);               \
-   void operator=(const TypeName&)
-
-#define DISALLOW_HEAP_ALLOC() \
-    void *operator new(size_t size);  \
-    void *operator new[](size_t size)
-
-#if defined OS_WIN
-#   define NEGINE_EXPORT __declspec(dllexport) // gcc supports it too
-#   define NEGINE_IMPORT __declspec(dllimport)
-#   define NEGINE_STATIC
-#elif defined(COMPILER_GCC)
-#   define NEGINE_EXPORT __attribute__((visibility("default")))
-#   define NEGINE_IMPORT NEGINE_EXPORT
-#   define NEGINE_STATIC NEGINE_EXPORT
-#endif
-
-#if defined NEGINE_SHARED_BUILD
-#   if defined NEGINE_STATIC_BUILD
-#       undef NEGINE_STATIC_BUILD
-#   endif
-#elif !defined NEGINE_STATIC_BUILD
-#   define NEGINE_SHARED_BUILD
-#endif
-
-#if !defined NEGINE_API
-#   if defined NEGINE_SHARED_BUILD
-#      if defined NEGINE_SOURCE
-#          define NEGINE_API NEGINE_EXPORT
-#          define NEGINE_TEMPLATE
-#      else
-#          define NEGINE_API NEGINE_IMPORT
-#          define NEGINE_TEMPLATE extern
-#      endif
-#   elif defined NEGINE_STATIC_BUILD
-#      define NEGINE_API NEGINE_STATIC
-#      define NEGINE_TEMPLATE
-#   endif
-#endif

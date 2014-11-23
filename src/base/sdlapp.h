@@ -20,11 +20,10 @@ protected:
     virtual void OnReshape( i32 width, i32 height );
     virtual void OnKeyboardDown( u8 key );
     virtual void OnKeyboardUp( u8 key );
-    void Pump();
+    void PumpEvents();
 protected:
     SDL_Window* mainwindow_;     //!< window handle
     SDL_Renderer* renderer_;
-    void* maincontext_;          //!< GL context
     bool run_;
     u32 width_;
     u32 height_;

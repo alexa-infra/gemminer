@@ -13,10 +13,11 @@ namespace base {
 
 
 SDLApp::SDLApp()
-    : mainwindow_( NULL )
-    , run_( true )
-    , width_( 640 )
-    , height_( 480 )
+    : mainwindow_(nullptr)
+    , renderer_(nullptr)
+    , run_(true)
+    , width_(640)
+    , height_(480)
 {
     SDL_Init(SDL_INIT_VIDEO);
 
@@ -41,7 +42,7 @@ SDLApp::~SDLApp()
     SDL_Quit();
 }
 
-void SDLApp::Pump()
+void SDLApp::PumpEvents()
 {
     SDL_PumpEvents();
     SDL_Event event;
@@ -78,18 +79,19 @@ void SDLApp::Pump()
 
 void SDLApp::Run()
 {
-    Pump();
     timer_.reset();
 
     while( run_ ) {
+        PumpEvents();
         float dt = timer_.reset() / 1000.f;
         OnFrame(dt);
-        Pump();
     }
 }
 
 void SDLApp::OnFrame(float dt)
 {
+    SDL_SetRenderDrawColor(renderer_, 255, 0, 0, 255);
+    SDL_RenderClear(renderer_);
     SDL_RenderPresent(renderer_);
 }
 
@@ -106,7 +108,7 @@ void SDLApp::OnKeyboardDown( u8 key )
 }
 
 void SDLApp::OnKeyboardUp( u8 key )
-{   
+{
 }
 
 } // namespace base
