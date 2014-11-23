@@ -43,5 +43,5 @@ void TimerDisplay::reset(float seconds)
 
 bool TimerDisplay::isFinished() const
 {
-    return run_ && current_ > 0.0f;
+    return !run_;
 }

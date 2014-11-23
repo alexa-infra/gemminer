@@ -7,6 +7,17 @@ namespace game {
     struct Sprite;
     class TimerDisplay;
 
+    namespace GameStates
+    {
+        enum GameState
+        {
+            Start,
+            Play,
+            End
+        };
+    }
+    typedef GameStates::GameState GameState;
+
     class Game : public ::base::SDLApp
     {
     public:
@@ -23,6 +34,7 @@ namespace game {
         Sprite* background_;
         Board* board_;
         TimerDisplay* timer_;
+        GameState state_;
     };
 
 }

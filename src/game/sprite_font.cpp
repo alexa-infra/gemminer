@@ -94,12 +94,14 @@ SpriteFont::~SpriteFont()
 
 void SpriteFont::RenderText(const std::string& text, float x, float y)
 {
+    float xStart = x;
     text_length_ = (u32)text.size();
     for (u32 i = 0; i < text_length_; i++) {
         u8 ch = text[i];
 
         if (ch == '\n')
         {
+            x = xStart;
             y += font_height_;
             continue;
         }
