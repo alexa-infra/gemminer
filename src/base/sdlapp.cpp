@@ -79,14 +79,16 @@ void SDLApp::Pump()
 void SDLApp::Run()
 {
     Pump();
+    timer_.reset();
 
     while( run_ ) {
-        OnFrame();
+        float dt = timer_.reset() / 1000.f;
+        OnFrame(dt);
         Pump();
     }
 }
 
-void SDLApp::OnFrame()
+void SDLApp::OnFrame(float dt)
 {
     SDL_RenderPresent(renderer_);
 }

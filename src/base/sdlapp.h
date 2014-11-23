@@ -1,6 +1,7 @@
 #pragma once
 
 #include "base/types.h"
+#include "base/timer.h"
 
 struct SDL_Window;
 struct SDL_Renderer;
@@ -14,7 +15,7 @@ public:
     virtual ~SDLApp();
     virtual void Run();
 protected:
-    virtual void OnFrame();
+    virtual void OnFrame(float dt);
     virtual void OnMouseMove( i32 x, i32 y, i32 dx, i32 dy );
     virtual void OnReshape( i32 width, i32 height );
     virtual void OnKeyboardDown( u8 key );
@@ -27,6 +28,7 @@ protected:
     bool run_;
     u32 width_;
     u32 height_;
+    Timer timer_;
 };
 
 } // namespace base
