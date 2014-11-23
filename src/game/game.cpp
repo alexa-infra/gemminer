@@ -4,9 +4,12 @@
 #include "game/animation_manager.h"
 #include "game/board.h"
 #include "SDL.h"
+#include "game/sprite_font.h"
 
 using namespace game;
 using namespace base;
+
+static SpriteFont* font = nullptr;
 
 Game::Game()
 {
@@ -17,6 +20,7 @@ Game::Game()
     background_ = new Sprite;
     background_->init("data/BackGround.jpg");
     backgroundLayer->sprites.push_back(background_);
+    font = new SpriteFont(renderer_, "data/agencyb.ttf");
 
     board_ = new Board(8, 8);
 }
@@ -49,6 +53,8 @@ void Game::Render()
     SDL_RenderFillRect(renderer_, NULL);
 
     RenderManager::instance().Render();
+
+    font->RenderText("hello world", 100, 100);
 
     SDL_RenderPresent(renderer_);
 }

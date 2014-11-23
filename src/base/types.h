@@ -3,8 +3,6 @@
 #include "base/platform.h"
 #include <stdint.h>
 
-namespace base {
-
 typedef int8_t      i8;
 typedef uint8_t     u8;
 typedef int16_t     i16;
@@ -24,5 +22,3 @@ typedef double      f64;
     typedef u64 uptr;
     typedef i64 iptr;
 #endif
-
-} // namespace base
