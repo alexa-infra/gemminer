@@ -13,6 +13,7 @@ namespace game
         int item;
         int i;
         int j;
+        int score;
         bool removed;
     };
 
@@ -28,7 +29,7 @@ namespace game
         void update(float dt);
 
     private:
-        void clickOn(void*);
+        void clickOn(Tile& tile);
 
         Tile* findEmpty(int iCol);
         Tile* findNotEmptyAbove(int iCol, int jRow);

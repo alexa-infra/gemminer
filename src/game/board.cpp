@@ -54,6 +54,10 @@ void Board::fill()
             layer_->sprites.push_back(tile.sprite);
         }
     }
+    while (destroyGems(false)) {
+        generateGems(false);
+    }
+    animateInitial();
 }
 
 void Board::clear()
@@ -62,4 +66,100 @@ void Board::clear()
     for (int i = 0; i < tiles_.size(); i++)
         for (int j = 0; j < tiles_[i].size(); j++)
             delete tiles_[i][j].sprite;
+}
+
+void Board::generateGems(bool animate)
+{
+    for (int i = 0; i < tx_; i++)
+    {
+        for (int j = 0; j < ty_; j++)
+        {
+            Tile& tile = tiles_[i][j];
+            if (tile.removed) {
+                tile.removed = false;
+                int item = rand() % spriteCount;
+                tile.item = item;
+                Vec2 pos = tile.sprite->position;
+                Color color = tile.sprite->color;
+                tile.sprite->init(spriteNames[item]);
+                tile.sprite->position = pos;
+                tile.sprite->color = color;
+                if (animate) {
+
+                }
+                else {
+                    tile.sprite->color.a = 1.0f;
+                }
+            }
+        }
+    }
+}
+
+bool Board::destroyGems(bool animate)
+{
+    typedef std::vector<Tile*> Match;
+    typedef std::vector<Match> Matches;
+    Matches targets;
+    for (int i = 0; i < tx_; i++)
+    {
+        int prev = -1;
+        Match target;
+        for (int j = 0; j < ty_; j++)
+        {
+            Tile& it = tiles_[i][j];
+            if (it.item != prev)  {
+                if (target.size() >= 3)
+                    targets.push_back(target);
+                target.clear();
+            }
+            target.push_back(&it);
+            prev = it.item;
+        }
+        if (target.size() >= 3)
+            targets.push_back(target);
+    }
+
+    for (int j = 0; j < ty_; j++)
+    {
+        int prev = -1;
+        Match target;
+        for (int i = 0; i < tx_; i++)
+        {
+            Tile& it = tiles_[i][j];
+            if (it.item != prev)  {
+                if (target.size() >= 3)
+                    targets.push_back(target);
+                target.clear();
+            }
+            target.push_back(&it);
+            prev = it.item;
+        }
+        if (target.size() >= 3)
+            targets.push_back(target);
+    }
+
+    for (int i = 0; i < targets.size(); i++)
+    {
+        Match& match = targets[i];
+        int targetSize = (int)match.size();
+        for (int j = 0; j < targetSize; j++)
+        {
+            Tile& tile = *match[j];
+            tile.removed = true;
+            tile.score += targetSize;
+
+            if (animate) {
+
+            }
+            else {
+                tile.sprite->color.a = 0.0f;
+            }
+        }
+    }
+
+    return !targets.empty();
+}
+
+void Board::animateInitial()
+{
 }

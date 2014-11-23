@@ -33,11 +33,11 @@ void RenderManager::Render()
         for (s = layer->sprites.begin(); s != layer->sprites.end(); ++s)
         {
             Sprite* sprite = *s;
-            SDL_SetRenderDrawColor(renderer_,
+            SDL_SetTextureColorMod(sprite->tex,
                 (u8)floor(sprite->color.r * 255),
                 (u8)floor(sprite->color.g * 255),
-                (u8)floor(sprite->color.b * 255),
-                (u8)floor(sprite->color.a * 255));
+                (u8)floor(sprite->color.b * 255));
+            SDL_SetTextureAlphaMod(sprite->tex, (u8)floor(sprite->color.a * 255));
             SDL_Rect rect;
             rect.x = (i32)sprite->position.x;
             rect.y = (i32)sprite->position.y;
