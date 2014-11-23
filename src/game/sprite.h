@@ -24,6 +24,8 @@ namespace game
         SDL_Texture* tex;
         Color color;
         Vec2 position;
+        int w;
+        int h;
 
         void init(const std::string& path);
     };

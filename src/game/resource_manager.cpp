@@ -40,19 +40,25 @@ ResourceManager::ResourceManager(Game* app)
 
 ResourceManager::~ResourceManager()
 {
-    TextureMap::iterator it;
+    TextureMap::const_iterator it;
     for (it = textures_.begin(); it != textures_.end(); ++it)
     {
-        SDL_DestroyTexture(it->second);
+        const ImageTexture& img = it->second;
+        SDL_DestroyTexture(img.texture);
     }
 }
 
-SDL_Texture* ResourceManager::LoadTexture(const std::string& path)
+ImageTexture ResourceManager::LoadTexture(const std::string& path)
 {
+    ImageTexture ret;
+    ret.texture = nullptr;
+    ret.w = 0;
+    ret.h = 0;
+
     TextureInfo info;
     StbiImage image(path, info);
     if (!image.isOk()) {
-        return nullptr;
+        return ret;
     }
     int rmask, gmask, bmask, amask;
     if (info.ComponentCount == 3)
@@ -75,15 +81,19 @@ SDL_Texture* ResourceManager::LoadTexture(const std::string& path)
     SDL_PixelFormat * fmt = surface->format;
     SDL_Texture* tex = SDL_CreateTextureFromSurface(renderer_, surface);
     SDL_FreeSurface(surface);
-    return tex;
+
+    ret.texture = tex;
+    ret.w = info.Width;
+    ret.h = info.Height;
+    return ret;
 }
 
-SDL_Texture* ResourceManager::Texture(const std::string& path)
+ImageTexture ResourceManager::Texture(const std::string& path)
 {
     TextureMap::iterator it = textures_.find(path);
     if (it != textures_.end())
         return it->second;
-    SDL_Texture* tex = LoadTexture(path);
+    ImageTexture tex = LoadTexture(path);
     textures_[path] = tex;
     return tex;
 }

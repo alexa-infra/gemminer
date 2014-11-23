@@ -11,16 +11,23 @@ namespace game {
 
     class Game;
 
+    struct ImageTexture
+    {
+        SDL_Texture* texture;
+        int w;
+        int h;
+    };
+
     class ResourceManager : public ::base::Singleton<ResourceManager>
     {
     public:
         ResourceManager(Game* app);
         virtual ~ResourceManager();
-        SDL_Texture* Texture(const std::string& path);
+        ImageTexture Texture(const std::string& path);
     private:
-        SDL_Texture* LoadTexture(const std::string& path);
+        ImageTexture LoadTexture(const std::string& path);
     private:
-        typedef std::map<std::string, SDL_Texture*> TextureMap;
+        typedef std::map<std::string, ImageTexture> TextureMap;
         TextureMap textures_;
         SDL_Renderer* renderer_;
     };

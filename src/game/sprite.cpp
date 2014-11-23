@@ -8,7 +8,10 @@ void Sprite::init(const std::string& path)
 {
     color.r = 1.0f; color.g = 1.0f; color.b = 1.0f; color.a = 1.0f;
     position.x = 0.0f; position.y = 0.0f;
-    tex = ResourceManager::instance().Texture(path);
+    ImageTexture img = ResourceManager::instance().Texture(path);
+    tex = img.texture;
+    w = img.w;
+    h = img.h;
 }
 
 void SpriteAnimatePosition::setInitial()
