@@ -6,6 +6,7 @@
 #include "SDL.h"
 #include "game/sprite_font.h"
 #include "game/timer_display.h"
+#include <ctime>
 
 using namespace game;
 using namespace base;
@@ -23,6 +24,7 @@ Game::Game()
     backgroundLayer->sprites.push_back(background_);
     font = ResourceManager::instance().Font("agencyb.ttf");
 
+    srand(time(NULL));
     board_ = new Board(8, 8);
     timer_ = new TimerDisplay(60.f);
     state_ = GameStates::Start;
