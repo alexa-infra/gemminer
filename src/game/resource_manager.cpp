@@ -17,6 +17,7 @@ struct TextureInfo
     i32 ComponentCount;
 };
 
+//! Small helper for STB_image library
 struct StbiImage
 {
     StbiImage(const std::string& path, TextureInfo& info) : buffer(NULL)
@@ -49,7 +50,7 @@ template<> ResourceManager* Singleton<ResourceManager>::instance_ = nullptr;
 
 ResourceManager::ResourceManager(Game* app)
 {
-    renderer_ = app->renderer();
+    renderer_ = app->GetRenderer();
     char* basePath = SDL_GetBasePath();
     if (basePath) {
         base_ = std::string(basePath);
@@ -100,6 +101,7 @@ ImageTexture ResourceManager::LoadTexture(const std::string& path)
         amask = 0xff000000;
     }
 
+    // Only 8-bit per channel (see notes for stb image)
     SDL_Surface* surface = SDL_CreateRGBSurfaceFrom(image.buffer, info.Width, info.Height,
                            info.ComponentCount * 8, info.Width * info.ComponentCount, rmask, gmask, bmask, amask);
     SDL_Texture* tex = SDL_CreateTextureFromSurface(renderer_, surface);

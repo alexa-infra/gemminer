@@ -11,7 +11,7 @@ TimerDisplay::TimerDisplay(float seconds)
     run_ = true;
 }
 
-void TimerDisplay::update(float dt)
+void TimerDisplay::Update(float dt)
 {
     if (!run_)
         return;
@@ -24,7 +24,7 @@ void TimerDisplay::update(float dt)
     }
 }
 
-std::string TimerDisplay::getText() const
+std::string TimerDisplay::GetText() const
 {
     std::ostringstream ss;
     int minutes = (int)floor(current_) / 60;
@@ -35,13 +35,13 @@ std::string TimerDisplay::getText() const
     return ss.str();
 }
 
-void TimerDisplay::reset(float seconds)
+void TimerDisplay::Reset(float seconds)
 {
     current_ = seconds;
     run_ = true;
 }
 
-bool TimerDisplay::isFinished() const
+bool TimerDisplay::Finished() const
 {
     return !run_;
 }

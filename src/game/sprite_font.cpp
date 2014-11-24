@@ -1,8 +1,6 @@
 #include "game/sprite_font.h"
-
 #define STB_TRUETYPE_IMPLEMENTATION
 #include "stb_truetype.h"
-
 #include "SDL.h"
 
 using namespace game;
@@ -10,7 +8,7 @@ using namespace game;
 SpriteFont::SpriteFont(SDL_Renderer* renderer, const std::string& filename)
 {
     renderer_ = renderer;
-    font_height_ = 36;
+    fontHeight_ = 36;
 
     SDL_RWops* f = SDL_RWFromFile(filename.c_str(), "rb");
     i32 size = (i32)SDL_RWsize(f);
@@ -18,18 +16,18 @@ SpriteFont::SpriteFont(SDL_Renderer* renderer, const std::string& filename)
     SDL_RWread(f, data, size, 1);
     SDL_RWclose(f);
 
-    const int w = 512;
-    const int h = 512;
+    const int w = textureSize_;
+    const int h = textureSize_;
 
     u8* bitmap = new u8[w * h];
 
     cdata_ = new stbtt_bakedchar[96];
     stbtt_BakeFontBitmap((const u8*)data,
                          0,
-                         font_height_,
+                         fontHeight_,
                          bitmap,
-                         512,
-                         512,
+                         w,
+                         h,
                          32,
                          96,
                          (stbtt_bakedchar*)cdata_);
@@ -39,8 +37,7 @@ SpriteFont::SpriteFont(SDL_Renderer* renderer, const std::string& filename)
     // SDL does not understand GL_ALPHA :(
     u8* bitmap2 = new u8[w * h * 4];
     i32 ss = w * h;
-    for (int i = 0; i < ss; i++)
-    {
+    for (int i = 0; i < ss; i++) {
         bitmap2[i * 4 + 0] = 0xff;
         bitmap2[i * 4 + 1] = 0xff;
         bitmap2[i * 4 + 2] = 0xff;
@@ -67,14 +64,13 @@ SpriteFont::~SpriteFont()
 void SpriteFont::RenderText(const std::string& text, float x, float y)
 {
     float xStart = x;
-    text_length_ = (u32)text.size();
-    for (u32 i = 0; i < text_length_; i++) {
+    u32 textLen = (u32)text.size();
+    for (u32 i = 0; i < textLen; i++) {
         u8 ch = text[i];
 
-        if (ch == '\n')
-        {
+        if (ch == '\n') {
             x = xStart;
-            y += font_height_;
+            y += fontHeight_;
             continue;
         }
 
@@ -83,21 +79,16 @@ void SpriteFont::RenderText(const std::string& text, float x, float y)
 
         stbtt_aligned_quad q;
         stbtt_GetBakedQuad(cdata_,
-                           512,    // width of font canvas
-                           512,    // height of font canvas
+                           textureSize_,
+                           textureSize_,
                            ch - 32,  // position of character in font
                            &x,     // current position
                            &y,
                            &q,     // resulted quad
-                           1);     // 1 tex coords for opengl (0 for d3d)
-
-        // note: x,y position is advanced by font character size
+                           1);     // '1' for tex coords for opengl ('0' for d3d)
 
         f32 w = q.x1 - q.x0;
         f32 h = q.y1 - q.y0;
-
-        //q.y0 = y - h;
-        //q.y1 = y;
 
         SDL_Rect rect;
         rect.x = (int)q.x0;

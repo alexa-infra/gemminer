@@ -5,28 +5,34 @@
 
 namespace game
 {
-struct BaseAnimation
+//! Base class for animations
+class BaseAnimation
 {
+public:
     virtual ~BaseAnimation() {}
-    float clock;
-    float duration;
+    
+    bool Update(float dt);
+    bool Set(float newClock);
 
-    bool update(float dt);
-    bool set(float newClock);
-    virtual void setInitial() = 0;
-    virtual void setFinish() = 0;
-    virtual void setEasing() = 0;
+protected:
+    virtual void SetInitial() = 0;
+    virtual void SetFinish() = 0;
+    virtual void SetEasing() = 0;
+protected:
+    float clock_;
+    float duration_;
 };
 
+//! Animation manager, updates all animations, and remove them on finish
 class AnimationManager : public ::base::Singleton<AnimationManager>
 {
 public:
     AnimationManager();
     ~AnimationManager();
 
-    void add(BaseAnimation* animation);
-    bool empty() const;
-    void update(float dt);
+    void Add(BaseAnimation* animation);
+    bool Empty() const;
+    void Update(float dt);
 private:
     std::vector<BaseAnimation*> animations_;
 };

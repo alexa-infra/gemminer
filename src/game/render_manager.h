@@ -20,6 +20,9 @@ struct RenderLayer
     std::vector<Sprite*> sprites;
 };
 
+//! Sprite renderer
+//!   Renders layers according to their order and visibility
+//!   Sprites inside layer are not sorted
 class RenderManager : public base::Singleton<RenderManager>
 {
 public:
@@ -28,12 +31,12 @@ public:
 
     void Render();
 
-    RenderLayer* addLayer(const std::string& name, int priority);
-    void showLayer(const std::string& name);
-    void hideLayer(const std::string& name);
-    RenderLayer* getLayer(const std::string& name);
+    RenderLayer* AddLayer(const std::string& name, int priority);
+    void ShowLayer(const std::string& name);
+    void HideLayer(const std::string& name);
+    RenderLayer* GetLayer(const std::string& name);
 private:
-    void refreshRenderList();
+    void RefreshRenderList();
 
     typedef std::map<std::string, RenderLayer*> LayerMap;
     typedef std::vector<RenderLayer*> LayerList;

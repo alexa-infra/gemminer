@@ -18,13 +18,15 @@ enum GameState
 }
 typedef GameStates::GameState GameState;
 
+//! Game application class
+//!  Receives GUI events, and calculates global game states (like Starting Menu, Play, Finish, Pause)
 class Game : public ::base::SDLApp
 {
 public:
     Game();
-    ~Game();
+    virtual ~Game();
 
-    SDL_Renderer* renderer();
+    SDL_Renderer* GetRenderer();
 protected:
     void Update(float dt);
     void Render();

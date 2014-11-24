@@ -10,18 +10,20 @@ struct SDL_Renderer;
 namespace game
 {
 
+//! Simple font renderer (based on ttf font file)
+//!   it doesn't make batch from draw calls (each character is rendered separately from atlas)
 class SpriteFont
 {
 public:
     SpriteFont(SDL_Renderer* renderer, const std::string& filename);
     ~SpriteFont();
 
+    //! Renders text at screen
     void RenderText(const std::string& text, float x, float y);
 
 private:
-    //u32 max_chars_;             //!< maximum text length
-    u32 text_length_;           //!< current text length
-    f32 font_height_;           //!< current font height
+    f32 fontHeight_;           //!< current font height
+    i32 textureSize_;           //!< texture size
 
     SDL_Renderer* renderer_;
     SDL_Texture* texture_;      //!< font texture

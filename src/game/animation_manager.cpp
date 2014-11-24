@@ -4,26 +4,26 @@ using namespace game;
 
 template<> AnimationManager* base::Singleton<AnimationManager>::instance_ = nullptr;
 
-bool BaseAnimation::update(float dt)
+bool BaseAnimation::Update(float dt)
 {
-    return set(clock + dt);
+    return Set(clock_ + dt);
 }
 
-bool BaseAnimation::set(float newClock)
+bool BaseAnimation::Set(float newClock)
 {
-    clock = newClock;
-    if (clock < 0) {
-        clock = 0;
-        setInitial();
+    clock_ = newClock;
+    if (clock_ < 0) {
+        clock_ = 0;
+        SetInitial();
     }
-    else if (clock >= duration) {
-        clock = duration;
-        setFinish();
+    else if (clock_ >= duration_) {
+        clock_ = duration_;
+        SetFinish();
     }
     else {
-        setEasing();
+        SetEasing();
     }
-    return clock >= duration;
+    return clock_ >= duration_;
 }
 
 AnimationManager::AnimationManager()
@@ -37,23 +37,23 @@ AnimationManager::~AnimationManager()
         delete animations_[i];
 }
 
-void AnimationManager::add(BaseAnimation* animation)
+void AnimationManager::Add(BaseAnimation* animation)
 {
     animations_.push_back(animation);
 }
 
-bool AnimationManager::empty() const
+bool AnimationManager::Empty() const
 {
     return animations_.empty();
 }
 
-void AnimationManager::update(float dt)
+void AnimationManager::Update(float dt)
 {
     size_t i = 0;
     while (i < animations_.size())
     {
         BaseAnimation* animation = animations_[i];
-        if (animation->update(dt))
+        if (animation->Update(dt))
         {
             animations_.erase(animations_.begin() + i);
             delete animation;

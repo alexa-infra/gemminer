@@ -4,7 +4,7 @@
 
 using namespace game;
 
-void Sprite::init(const std::string& path)
+void Sprite::Init(const std::string& path)
 {
     color.r = 1.0f;
     color.g = 1.0f;
@@ -20,20 +20,20 @@ void Sprite::init(const std::string& path)
 
 SpriteAnimatePosition::SpriteAnimatePosition(float d, Sprite* s, Vec2 from, Vec2 to)
 {
-    duration = d;
-    clock = 0.0f;
+    duration_ = d;
+    clock_ = 0.0f;
     sprite = s;
     positionFrom = from;
     positionTo = to;
-    setInitial();
+    SetInitial();
 }
 
-void SpriteAnimatePosition::setInitial()
+void SpriteAnimatePosition::SetInitial()
 {
     sprite->position = positionFrom;
 }
 
-void SpriteAnimatePosition::setFinish()
+void SpriteAnimatePosition::SetFinish()
 {
     sprite->position = positionTo;
 }
@@ -44,42 +44,40 @@ static float linear(float t, float b, float c, float d)
     return c * t / d + b;
 }
 
-void SpriteAnimatePosition::setEasing()
+void SpriteAnimatePosition::SetEasing()
 {
     Vec2 newPos;
-    newPos.x = linear(clock, positionFrom.x, positionTo.x - positionFrom.x, duration);
-    newPos.y = linear(clock, positionFrom.y, positionTo.y - positionFrom.y, duration);
+    newPos.x = linear(clock_, positionFrom.x, positionTo.x - positionFrom.x, duration_);
+    newPos.y = linear(clock_, positionFrom.y, positionTo.y - positionFrom.y, duration_);
     sprite->position = newPos;
 }
 
 SpriteAnimateColor::SpriteAnimateColor(float d, Sprite* s, Color from, Color to)
 {
-    duration = d;
-    clock = 0.0f;
+    duration_ = d;
+    clock_ = 0.0f;
     sprite = s;
     colorFrom = from;
     colorTo = to;
-    setInitial();
+    SetInitial();
 }
 
-void SpriteAnimateColor::setInitial()
+void SpriteAnimateColor::SetInitial()
 {
     sprite->color = colorFrom;
 }
 
-void SpriteAnimateColor::setFinish()
+void SpriteAnimateColor::SetFinish()
 {
     sprite->color = colorTo;
 }
 
-void SpriteAnimateColor::setEasing()
+void SpriteAnimateColor::SetEasing()
 {
     Color newColor;
-    newColor.r = linear(clock, colorFrom.r, colorTo.r - colorFrom.r, duration);
-    newColor.g = linear(clock, colorFrom.g, colorTo.g - colorFrom.g, duration);
-    newColor.b = linear(clock, colorFrom.b, colorTo.b - colorFrom.b, duration);
-    newColor.a = linear(clock, colorFrom.a, colorTo.a - colorFrom.a, duration);
+    newColor.r = linear(clock_, colorFrom.r, colorTo.r - colorFrom.r, duration_);
+    newColor.g = linear(clock_, colorFrom.g, colorTo.g - colorFrom.g, duration_);
+    newColor.b = linear(clock_, colorFrom.b, colorTo.b - colorFrom.b, duration_);
+    newColor.a = linear(clock_, colorFrom.a, colorTo.a - colorFrom.a, duration_);
     sprite->color = newColor;
 }
-
-

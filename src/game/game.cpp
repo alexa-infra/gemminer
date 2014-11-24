@@ -17,9 +17,9 @@ Game::Game()
     ResourceManager::init<Game*>(this);
     RenderManager::init<Game*>(this);
     AnimationManager::init();
-    RenderLayer* backgroundLayer = RenderManager::instance().addLayer("background", 1);
+    RenderLayer* backgroundLayer = RenderManager::instance().AddLayer("background", 1);
     background_ = new Sprite;
-    background_->init("BackGround.jpg");
+    background_->Init("BackGround.jpg");
     backgroundLayer->sprites.push_back(background_);
     font = ResourceManager::instance().Font("agencyb.ttf");
 
@@ -47,14 +47,14 @@ void Game::OnFrame(float dt)
 
 void Game::Update(float dt)
 {
-    AnimationManager::instance().update(dt);
+    AnimationManager::instance().Update(dt);
 
     if (state_ == GameStates::Start) {
     }
     else if (state_ == GameStates::Play) {
-        board_->update(dt);
-        timer_->update(dt);
-        if (timer_->isFinished() && AnimationManager::instance().empty()) {
+        board_->Update(dt);
+        timer_->Update(dt);
+        if (timer_->Finished() && AnimationManager::instance().Empty()) {
             state_ = GameStates::End;
         }
     }
@@ -80,8 +80,8 @@ void Game::Render()
         font->RenderText("Touch to Start", 300, 300);
     }
     else if (state_ == GameStates::Play) {
-        font->RenderText(timer_->getText(), 100, 100);
-        font->RenderText(board_->getScoresText(), 100, 150);
+        font->RenderText(timer_->GetText(), 100, 100);
+        font->RenderText(board_->GetScoresText(), 100, 150);
     }
     else if (state_ == GameStates::End) {
         SDL_Rect rect;
@@ -91,13 +91,13 @@ void Game::Render()
         rect.h = 105;
         SDL_RenderFillRect(renderer_, &rect);
 
-        font->RenderText("Game finished!\nYour score is " + board_->getScoresText(), 300, 300);
+        font->RenderText("Game finished!\nYour score is " + board_->GetScoresText(), 300, 300);
     }
 
     SDL_RenderPresent(renderer_);
 }
 
-SDL_Renderer* Game::renderer()
+SDL_Renderer* Game::GetRenderer()
 {
     return renderer_;
 }
@@ -106,11 +106,11 @@ void Game::OnMouseUp(int x, int y)
 {
     if (state_ == GameStates::Start) {
         state_ = GameStates::Play;
-        timer_->reset(60.0f);
-        board_->fill();
+        timer_->Reset(60.0f);
+        board_->Fill();
     }
     else if (state_ == GameStates::Play) {
-        board_->mouseUp(x, y);
+        board_->MouseUp(x, y);
     }
     else if (state_ == GameStates::End) {
         state_ = GameStates::Start;
@@ -120,6 +120,6 @@ void Game::OnMouseUp(int x, int y)
 void Game::OnMouseDown(int x, int y)
 {
     if (state_ == GameStates::Play) {
-        board_->mouseDown(x, y);
+        board_->MouseDown(x, y);
     }
 }

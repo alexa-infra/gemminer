@@ -11,7 +11,7 @@ template<> RenderManager * Singleton<RenderManager>::instance_ = nullptr;
 
 RenderManager::RenderManager(Game* game)
 {
-    renderer_ = game->renderer();
+    renderer_ = game->GetRenderer();
 }
 
 RenderManager::~RenderManager()
@@ -48,32 +48,32 @@ void RenderManager::Render()
     }
 }
 
-RenderLayer* RenderManager::addLayer(const std::string& name, int priority)
+RenderLayer* RenderManager::AddLayer(const std::string& name, int priority)
 {
     RenderLayer* layer = new RenderLayer;
     layer->name = name;
     layer->priority = priority;
     layer->visible = true;
     layers_[name] = layer;
-    refreshRenderList();
+    RefreshRenderList();
     return layer;
 }
 
-void RenderManager::showLayer(const std::string& name)
+void RenderManager::ShowLayer(const std::string& name)
 {
     RenderLayer* layer = layers_[name];
     layer->visible = true;
-    refreshRenderList();
+    RefreshRenderList();
 }
 
-void RenderManager::hideLayer(const std::string& name)
+void RenderManager::HideLayer(const std::string& name)
 {
     RenderLayer* layer = layers_[name];
     layer->visible = false;
-    refreshRenderList();
+    RefreshRenderList();
 }
 
-RenderLayer* RenderManager::getLayer(const std::string& name)
+RenderLayer* RenderManager::GetLayer(const std::string& name)
 {
     return layers_[name];
 }
@@ -82,7 +82,7 @@ bool CmpLayers(const RenderLayer* a, const RenderLayer* b) {
     return a->priority < b->priority;
 }
 
-void RenderManager::refreshRenderList()
+void RenderManager::RefreshRenderList()
 {
     renderList_.clear();
     LayerMap::iterator it;

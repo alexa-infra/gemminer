@@ -19,6 +19,7 @@ struct ImageTexture
     int h;
 };
 
+//! Resource cache and resource loader
 class ResourceManager : public ::base::Singleton<ResourceManager>
 {
 public:
