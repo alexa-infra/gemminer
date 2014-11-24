@@ -38,7 +38,8 @@ namespace game
 
         void clear();
         void fill();
-        void click(int x, int y);
+        void mouseDown(int x, int y);
+        void mouseUp(int x, int y);
         void update(float dt);
         int getScores() const { return score; }
         std::string getScoresText() const;
@@ -72,6 +73,7 @@ namespace game
         int score;
         int scoreMultiplier;
         bool countScores;
+        Tile* swipe_;
         Tile* current_;
         Tile* next_;
         BoardState state_;

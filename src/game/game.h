@@ -30,6 +30,7 @@ namespace game {
         void Render();
         virtual void OnFrame(float dt);
         virtual void OnMouseUp(int x, int y);
+        virtual void OnMouseDown(int x, int y);
 
         Sprite* background_;
         Board* board_;

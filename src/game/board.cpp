@@ -253,7 +253,18 @@ static bool isPointInsideRect(int x, int y, int sx, int sy, int sw, int sh)
     return (x > minx && x < maxx) && (y > miny && y < maxy);
 }
 
-void Board::click(int x, int y)
+void Board::mouseDown(int x, int y)
+{
+    if (state_ != BoardStates::Idle)
+        return;
+    if (isPointInsideRect(x, y, originX_, originY_, width_, height_)) {
+        int i = (int)floor((x - originX_) / (float)tileSize_);
+        int j = (int)floor((y - originY_) / (float)tileSize_);
+        swipe_ = &tiles_[i][j];
+    }
+}
+
+void Board::mouseUp(int x, int y)
 {
     if (state_ != BoardStates::Idle)
         return;
@@ -275,6 +286,15 @@ static bool isNeighbor(const Tile& a, const Tile& b)
 
 void Board::clickOn(Tile& tile)
 {
+    if (swipe_ != nullptr) {
+        if (isNeighbor(*swipe_, tile)) {
+            current_ = swipe_;
+            next_ = &tile;
+            return;
+        }
+        swipe_ = nullptr;
+    }
+
     if (current_ == nullptr)
         current_ = &tile;
     else if (isNeighbor(*current_, tile))
