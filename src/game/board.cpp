@@ -258,8 +258,8 @@ void Board::click(int x, int y)
     if (state_ != BoardStates::Idle)
         return;
     if (isPointInsideRect(x, y, originX_, originY_, width_, height_)) {
-        int i = (int)floor((x - originX_) / tileSize_);
-        int j = (int)floor((y - originY_) / tileSize_);
+        int i = (int)floor((x - originX_) / (float)tileSize_);
+        int j = (int)floor((y - originY_) / (float)tileSize_);
         clickOn(tiles_[i][j]);
     }
 }

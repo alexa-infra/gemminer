@@ -1,5 +1,4 @@
 #include "game/sprite_font.h"
-#include "base/fs.h"
 
 #define STB_TRUETYPE_IMPLEMENTATION
 #include "stb_truetype.h"
@@ -7,18 +6,17 @@
 #include <SDL.h>
 
 using namespace game;
-using namespace base;
 
 SpriteFont::SpriteFont(SDL_Renderer* renderer, const std::string& filename)
 {
     renderer_ = renderer;
     font_height_ = 36;
 
-    FileBinary* file = new FileBinary(filename.c_str());
-    u32 size = file->size();
-    u8* ttf_buffer = new u8[size];
-    file->readRaw(ttf_buffer, size);
-    delete file;
+    SDL_RWops* f = SDL_RWFromFile(filename.c_str(), "rb");
+    i64 size = SDL_RWsize(f);
+    u8* data = new u8[size];
+    SDL_RWread(f, data, size, 1);
+    SDL_RWclose(f);
 
     const int w = 512;
     const int h = 512;
@@ -26,7 +24,7 @@ SpriteFont::SpriteFont(SDL_Renderer* renderer, const std::string& filename)
     u8* bitmap = new u8[w * h];
 
     cdata_ = new stbtt_bakedchar[96];
-    stbtt_BakeFontBitmap((const u8*)ttf_buffer,
+    stbtt_BakeFontBitmap((const u8*)data,
         0,
         font_height_,
         bitmap,
@@ -35,7 +33,8 @@ SpriteFont::SpriteFont(SDL_Renderer* renderer, const std::string& filename)
         32,
         96,
         (stbtt_bakedchar*)cdata_);
-    delete[] ttf_buffer;
+    delete[] data;
+    
 
     // SDL does not understand GL_ALPHA :(
     u8* bitmap2 = new u8[w * h * 4];

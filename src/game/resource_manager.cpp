@@ -21,9 +21,17 @@ struct StbiImage
 {
     StbiImage(const std::string& path, TextureInfo& info) : buffer(NULL)
     {
-        buffer = stbi_load(path.c_str(), &info.Width, &info.Height, &info.ComponentCount, 0);
+        SDL_RWops* f = SDL_RWFromFile(path.c_str(), "rb");
+        i64 size = SDL_RWsize(f);
+        u8* data = new u8[size];
+        SDL_RWread(f, data, size, 1);
+        SDL_RWclose(f);
+
+        buffer = stbi_load_from_memory(data, (int)size, &info.Width, &info.Height, &info.ComponentCount, 0);
         if (buffer == NULL)
             printf("failed to load image: %s", stbi_failure_reason());
+
+        delete[] data;
     }
     ~StbiImage()
     {
@@ -31,6 +39,7 @@ struct StbiImage
             stbi_image_free(buffer);
     }
     u8* buffer;
+
     bool isOk() const { return buffer != NULL; }
 };
 
