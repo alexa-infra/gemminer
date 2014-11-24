@@ -12,14 +12,14 @@ file(GLOB GAME_SRC ${SRC_PATH}/game/*.cpp)
 file(GLOB GAME_HDR ${SRC_PATH}/game/*.h)
 source_group("game" FILES ${GAME_SRC} ${GAME_HDR})
 
-file(GLOB DATA_FILES ${CMAKE_SOURCE_DIR}/game/*.*)
+file(GLOB DATA_FILES ${CMAKE_SOURCE_DIR}/data/*.*)
 
 set(SRC ${MAIN_SRC} ${BASE_SRC} ${GAME_SRC})
 set(HDR ${MAIN_HDR} ${BASE_HDR} ${GAME_HDR})
 
 if (APPLE)
     set_source_files_properties(${DATA_FILES} PROPERTIES
-            MACOSX_PACKAGE_LOCATION .)
+            MACOSX_PACKAGE_LOCATION Resources)
 endif()
 
 if(UNIX OR MINGW)
@@ -56,10 +56,9 @@ if (MSCV)
         ${CMAKE_CURRENT_BINARY_DIR}/GemMiner.vcxproj.user @ONLY)
 endif()
 
-install(TARGETS GemMiner
-    RUNTIME DESTINATION bin
-)
-
 if (NOT APPLE)
+    install(TARGETS GemMiner
+        RUNTIME DESTINATION bin
+    )
     install(FILES ${DATA_FILES} DESTINATION bin)
 endif()
