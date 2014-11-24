@@ -4,5 +4,6 @@ glob:.DS_Store
 ^android-project/gen
 ^android-project/libs
 ^android-project/obj
+^submit/
 glob:*.xcworkspace
 glob:*.xcuserdatad

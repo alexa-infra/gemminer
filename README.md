@@ -4,6 +4,7 @@
     * SDL 2.0.3
     * STB image
     * STB truetype
+* Note: iOS/Android applications are not scaled to device screen resolution (they are always in fixed area) and they could be too small. Also specific device events (like screen rotation) are not processed now.
 
 # Build instructions
 ## Windows
