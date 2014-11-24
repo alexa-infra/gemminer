@@ -1,5 +1,6 @@
 #include "game/resource_manager.h"
 #include "game/game.h"
+#include "game/sprite_font.h"
 
 #define STBI_FAILURE_USERMSG
 #include "stb_image.c"
@@ -21,6 +22,8 @@ struct StbiImage
     StbiImage(const std::string& path, TextureInfo& info) : buffer(NULL)
     {
         buffer = stbi_load(path.c_str(), &info.Width, &info.Height, &info.ComponentCount, 0);
+        if (buffer == NULL)
+            printf("failed to load image: %s", stbi_failure_reason());
     }
     ~StbiImage()
     {
@@ -36,6 +39,11 @@ template<> ResourceManager* Singleton<ResourceManager>::instance_ = nullptr;
 ResourceManager::ResourceManager(Game* app)
 {
     renderer_ = app->renderer();
+    char* basePath = SDL_GetBasePath();
+    if (basePath) {
+        base_ = std::string(basePath);
+        SDL_free(basePath);
+    }
 }
 
 ResourceManager::~ResourceManager()
@@ -45,6 +53,11 @@ ResourceManager::~ResourceManager()
     {
         const ImageTexture& img = it->second;
         SDL_DestroyTexture(img.texture);
+    }
+    FontMap::const_iterator it1;
+    for (it1 = fonts_.begin(); it1 != fonts_.end(); ++it1)
+    {
+        delete it1->second;
     }
 }
 
@@ -92,7 +105,22 @@ ImageTexture ResourceManager::Texture(const std::string& path)
     TextureMap::iterator it = textures_.find(path);
     if (it != textures_.end())
         return it->second;
-    ImageTexture tex = LoadTexture(path);
+    ImageTexture tex = LoadTexture(base_ + path);
     textures_[path] = tex;
     return tex;
+}
+
+SpriteFont* ResourceManager::LoadFont(const std::string& path)
+{
+    return new SpriteFont(renderer_, path);
+}
+
+SpriteFont* ResourceManager::Font(const std::string& path)
+{
+    FontMap::iterator it = fonts_.find(path);
+    if (it != fonts_.end())
+        return it->second;
+    SpriteFont* font = LoadFont(base_ + path);
+    fonts_[path] = font;
+    return font;
 }

@@ -18,11 +18,10 @@ Game::Game()
     RenderManager::init<Game*>(this);
     AnimationManager::init();
     RenderLayer* backgroundLayer = RenderManager::instance().addLayer("background", 1);
-    printf("error %s\n", SDL_GetBasePath());
     background_ = new Sprite;
     background_->init("BackGround.jpg");
     backgroundLayer->sprites.push_back(background_);
-    font = new SpriteFont(renderer_, "agencyb.ttf");
+    font = ResourceManager::instance().Font("agencyb.ttf");
 
     board_ = new Board(8, 8);
     timer_ = new TimerDisplay(60.f);
@@ -33,6 +32,7 @@ Game::~Game()
 {
     delete background_;
     delete board_;
+    delete timer_;
     AnimationManager::shutdown();
     RenderManager::shutdown();
     ResourceManager::shutdown();

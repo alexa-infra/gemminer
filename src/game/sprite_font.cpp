@@ -1,5 +1,5 @@
 #include "game/sprite_font.h"
-#include <fstream>
+#include "base/fs.h"
 
 #define STB_TRUETYPE_IMPLEMENTATION
 #include "stb_truetype.h"
@@ -7,34 +7,7 @@
 #include <SDL.h>
 
 using namespace game;
-
-class FileBinary
-{
-public:
-    explicit FileBinary(const std::string& filename)
-    {
-        file_.open(filename.c_str(), std::ios::binary | std::ios::in);
-    }
-    ~FileBinary()
-    {
-        if (file_.is_open()) {
-            file_.close();
-        }
-    }
-    u32 size()
-    {
-        file_.seekg(0, std::ios::end);
-        u32 s = static_cast<u32>(file_.tellg());
-        file_.seekg(0, std::ios::beg);
-        return s;
-    }
-    void readRaw(u8* dest, u32 size)
-    {
-        file_.read(reinterpret_cast<char*>(dest), size);
-    }
-private:
-    std::fstream file_;
-};
+using namespace base;
 
 SpriteFont::SpriteFont(SDL_Renderer* renderer, const std::string& filename)
 {
