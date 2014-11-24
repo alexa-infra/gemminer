@@ -1,6 +1,6 @@
 #include "game/render_manager.h"
 #include "game/game.h"
-#include <SDL.h>
+#include "SDL.h"
 #include <algorithm>
 #include <cmath>
 

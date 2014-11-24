@@ -3,7 +3,7 @@
 #define STB_TRUETYPE_IMPLEMENTATION
 #include "stb_truetype.h"
 
-#include <SDL.h>
+#include "SDL.h"
 
 using namespace game;
 

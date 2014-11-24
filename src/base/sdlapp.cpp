@@ -1,6 +1,6 @@
 #include "sdlapp.h"
 
-#include <SDL.h>
+#include "SDL.h"
 
 #include <iostream>
 #include <string>
