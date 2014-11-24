@@ -56,9 +56,9 @@ void SDLApp::PumpEvents()
             break;
         case SDL_MOUSEMOTION:
             OnMouseMove(event.motion.x,
-                event.motion.y,
-                event.motion.xrel,
-                event.motion.yrel);
+                        event.motion.y,
+                        event.motion.xrel,
+                        event.motion.yrel);
 
             break;
         case SDL_KEYDOWN:
@@ -100,7 +100,7 @@ void SDLApp::OnReshape( i32 width, i32 height )
 }
 
 void SDLApp::OnKeyboardDown( u8 key )
-{   
+{
 }
 
 void SDLApp::OnKeyboardUp( u8 key )

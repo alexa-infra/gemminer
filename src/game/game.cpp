@@ -48,7 +48,7 @@ void Game::OnFrame(float dt)
 void Game::Update(float dt)
 {
     AnimationManager::instance().update(dt);
-    
+
     if (state_ == GameStates::Start) {
     }
     else if (state_ == GameStates::Play) {
@@ -71,8 +71,10 @@ void Game::Render()
 
     if (state_ == GameStates::Start) {
         SDL_Rect rect;
-        rect.x = 280; rect.y = 255;
-        rect.w = 190; rect.h = 70;
+        rect.x = 280;
+        rect.y = 255;
+        rect.w = 190;
+        rect.h = 70;
         SDL_RenderFillRect(renderer_, &rect);
 
         font->RenderText("Touch to Start", 300, 300);
@@ -83,8 +85,10 @@ void Game::Render()
     }
     else if (state_ == GameStates::End) {
         SDL_Rect rect;
-        rect.x = 240; rect.y = 255;
-        rect.w = 280; rect.h = 105;
+        rect.x = 240;
+        rect.y = 255;
+        rect.w = 280;
+        rect.h = 105;
         SDL_RenderFillRect(renderer_, &rect);
 
         font->RenderText("Game finished!\nYour score is " + board_->getScoresText(), 300, 300);

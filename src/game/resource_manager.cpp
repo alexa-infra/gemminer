@@ -40,7 +40,9 @@ struct StbiImage
     }
     u8* buffer;
 
-    bool isOk() const { return buffer != NULL; }
+    bool isOk() const {
+        return buffer != NULL;
+    }
 };
 
 template<> ResourceManager* Singleton<ResourceManager>::instance_ = nullptr;
@@ -99,7 +101,7 @@ ImageTexture ResourceManager::LoadTexture(const std::string& path)
     }
 
     SDL_Surface* surface = SDL_CreateRGBSurfaceFrom(image.buffer, info.Width, info.Height,
-        info.ComponentCount * 8, info.Width * info.ComponentCount, rmask, gmask, bmask, amask);
+                           info.ComponentCount * 8, info.Width * info.ComponentCount, rmask, gmask, bmask, amask);
     SDL_Texture* tex = SDL_CreateTextureFromSurface(renderer_, surface);
     SDL_FreeSurface(surface);
 

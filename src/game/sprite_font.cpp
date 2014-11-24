@@ -25,16 +25,16 @@ SpriteFont::SpriteFont(SDL_Renderer* renderer, const std::string& filename)
 
     cdata_ = new stbtt_bakedchar[96];
     stbtt_BakeFontBitmap((const u8*)data,
-        0,
-        font_height_,
-        bitmap,
-        512,
-        512,
-        32,
-        96,
-        (stbtt_bakedchar*)cdata_);
+                         0,
+                         font_height_,
+                         bitmap,
+                         512,
+                         512,
+                         32,
+                         96,
+                         (stbtt_bakedchar*)cdata_);
     delete[] data;
-    
+
 
     // SDL does not understand GL_ALPHA :(
     u8* bitmap2 = new u8[w * h * 4];
@@ -49,12 +49,12 @@ SpriteFont::SpriteFont(SDL_Renderer* renderer, const std::string& filename)
     delete bitmap;
 
     SDL_Surface* surface = SDL_CreateRGBSurfaceFrom(bitmap2, w, h,
-        4 * 8, w * 4, 0xff, 0xff00, 0xff0000, 0xff000000);
+                           4 * 8, w * 4, 0xff, 0xff00, 0xff0000, 0xff000000);
     texture_ = SDL_CreateTextureFromSurface(renderer, surface);
     SDL_SetTextureColorMod(texture_, 0xff, 0xff, 0xff);
 
     delete bitmap2;
-    
+
     SDL_FreeSurface(surface);
 }
 
@@ -83,13 +83,13 @@ void SpriteFont::RenderText(const std::string& text, float x, float y)
 
         stbtt_aligned_quad q;
         stbtt_GetBakedQuad(cdata_,
-            512,    // width of font canvas
-            512,    // height of font canvas
-            ch - 32,  // position of character in font
-            &x,     // current position 
-            &y,
-            &q,     // resulted quad
-            1);     // 1 tex coords for opengl (0 for d3d)
+                           512,    // width of font canvas
+                           512,    // height of font canvas
+                           ch - 32,  // position of character in font
+                           &x,     // current position
+                           &y,
+                           &q,     // resulted quad
+                           1);     // 1 tex coords for opengl (0 for d3d)
 
         // note: x,y position is advanced by font character size
 

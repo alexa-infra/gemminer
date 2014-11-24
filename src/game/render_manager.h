@@ -10,36 +10,36 @@ struct SDL_Renderer;
 
 namespace game
 {
-    class Game;
+class Game;
 
-    struct RenderLayer
-    {
-        std::string name;
-        int priority;
-        bool visible;
-        std::vector<Sprite*> sprites;
-    };
+struct RenderLayer
+{
+    std::string name;
+    int priority;
+    bool visible;
+    std::vector<Sprite*> sprites;
+};
 
-    class RenderManager : public base::Singleton<RenderManager>
-    {
-    public:
-        RenderManager(Game* game);
-        virtual ~RenderManager();
+class RenderManager : public base::Singleton<RenderManager>
+{
+public:
+    RenderManager(Game* game);
+    virtual ~RenderManager();
 
-        void Render();
+    void Render();
 
-        RenderLayer* addLayer(const std::string& name, int priority);
-        void showLayer(const std::string& name);
-        void hideLayer(const std::string& name);
-        RenderLayer* getLayer(const std::string& name);
-    private:
-        void refreshRenderList();
+    RenderLayer* addLayer(const std::string& name, int priority);
+    void showLayer(const std::string& name);
+    void hideLayer(const std::string& name);
+    RenderLayer* getLayer(const std::string& name);
+private:
+    void refreshRenderList();
 
-        typedef std::map<std::string, RenderLayer*> LayerMap;
-        typedef std::vector<RenderLayer*> LayerList;
+    typedef std::map<std::string, RenderLayer*> LayerMap;
+    typedef std::vector<RenderLayer*> LayerList;
 
-        LayerMap layers_;
-        LayerList renderList_;
-        SDL_Renderer* renderer_;
-    };
+    LayerMap layers_;
+    LayerList renderList_;
+    SDL_Renderer* renderer_;
+};
 }

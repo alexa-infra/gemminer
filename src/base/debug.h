@@ -14,9 +14,9 @@
     }
 
 #if defined _DEBUG
-    #define ASSERT(x) assertMacro(x)
-    #define ENSURE(x) assertMacro(x)
+#define ASSERT(x) assertMacro(x)
+#define ENSURE(x) assertMacro(x)
 #else
-    #define ASSERT(x) {}
-    #define ENSURE(x) (void)(x);
+#define ASSERT(x) {}
+#define ENSURE(x) (void)(x);
 #endif

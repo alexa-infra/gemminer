@@ -20,7 +20,7 @@ public:
 private:
     //! Gets current timer value
     u64 getClock() const;
-    
+
     //! Convert internal representation to milliseconds
     f64 convertToMillis( u64 range ) const;
 

@@ -34,9 +34,9 @@ void RenderManager::Render()
         {
             Sprite* sprite = *s;
             SDL_SetTextureColorMod(sprite->tex,
-                (u8)floor(sprite->color.r * 255),
-                (u8)floor(sprite->color.g * 255),
-                (u8)floor(sprite->color.b * 255));
+                                   (u8)floor(sprite->color.r * 255),
+                                   (u8)floor(sprite->color.g * 255),
+                                   (u8)floor(sprite->color.b * 255));
             SDL_SetTextureAlphaMod(sprite->tex, (u8)floor(sprite->color.a * 255));
             SDL_Rect rect;
             rect.x = (i32)sprite->position.x;
