@@ -18,10 +18,11 @@ Game::Game()
     RenderManager::init<Game*>(this);
     AnimationManager::init();
     RenderLayer* backgroundLayer = RenderManager::instance().addLayer("background", 1);
+    printf("error %s\n", SDL_GetBasePath());
     background_ = new Sprite;
-    background_->init("data/BackGround.jpg");
+    background_->init("BackGround.jpg");
     backgroundLayer->sprites.push_back(background_);
-    font = new SpriteFont(renderer_, "data/agencyb.ttf");
+    font = new SpriteFont(renderer_, "agencyb.ttf");
 
     board_ = new Board(8, 8);
     timer_ = new TimerDisplay(60.f);

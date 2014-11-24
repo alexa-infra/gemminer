@@ -10,11 +10,11 @@ using namespace base;
 
 const int spriteCount = 5;
 std::string spriteNames[spriteCount] = {
-    "data/Blue.png",
-    "data/Green.png",
-    "data/Purple.png",
-    "data/Red.png",
-    "data/Yellow.png"
+    "Blue.png",
+    "Green.png",
+    "Purple.png",
+    "Red.png",
+    "Yellow.png"
 };
 
 const float Animation_Appear = 0.5f;

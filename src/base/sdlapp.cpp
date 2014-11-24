@@ -1,9 +1,5 @@
 #include "sdlapp.h"
 
-#ifdef OS_WIN
-#  define SDL_MAIN_HANDLED
-#endif
-
 #include <SDL.h>
 
 #include <iostream>

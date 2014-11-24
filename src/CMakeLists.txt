@@ -37,8 +37,23 @@ include_directories(
     ${THIRDPARTY_PATH}/stb)
 
 add_executable(GemMiner ${SRC} ${HDR})
-target_link_libraries(GemMiner SDL2)
+target_link_libraries(GemMiner SDL2 SDL2main)
 
 configure_file(
     ${CMAKE_SOURCE_DIR}/cmake/project.vcxproj.user.in
     ${CMAKE_CURRENT_BINARY_DIR}/GemMiner.vcxproj.user @ONLY)
+
+install(TARGETS GemMiner
+    RUNTIME DESTINATION bin
+)
+
+install(FILES
+    ${CMAKE_SOURCE_DIR}/data/BackGround.jpg
+    ${CMAKE_SOURCE_DIR}/data/Blue.png
+    ${CMAKE_SOURCE_DIR}/data/Green.png
+    ${CMAKE_SOURCE_DIR}/data/Purple.png
+    ${CMAKE_SOURCE_DIR}/data/Red.png
+    ${CMAKE_SOURCE_DIR}/data/Yellow.png
+    ${CMAKE_SOURCE_DIR}/data/agencyb.ttf
+    DESTINATION bin
+)
