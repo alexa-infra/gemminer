@@ -13,7 +13,7 @@ SpriteFont::SpriteFont(SDL_Renderer* renderer, const std::string& filename)
     font_height_ = 36;
 
     SDL_RWops* f = SDL_RWFromFile(filename.c_str(), "rb");
-    i64 size = SDL_RWsize(f);
+    i32 size = (i32)SDL_RWsize(f);
     u8* data = new u8[size];
     SDL_RWread(f, data, size, 1);
     SDL_RWclose(f);

@@ -49,7 +49,7 @@ bool AnimationManager::empty() const
 
 void AnimationManager::update(float dt)
 {
-    int i = 0;
+    size_t i = 0;
     while (i < animations_.size())
     {
         BaseAnimation* animation = animations_[i];

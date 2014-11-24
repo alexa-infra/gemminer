@@ -1,4 +1,5 @@
 ^_build/
+^_build32/
 glob:.DS_Store
 ^android-project/bin
 ^android-project/gen

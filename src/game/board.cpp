@@ -80,8 +80,8 @@ void Board::clear()
 {
     score = 0;
     layer_->sprites.clear();
-    for (int i = 0; i < tiles_.size(); i++)
-        for (int j = 0; j < tiles_[i].size(); j++)
+    for (size_t i = 0; i < tiles_.size(); i++)
+        for (size_t j = 0; j < tiles_[i].size(); j++)
             delete tiles_[i][j].sprite;
 }
 
@@ -159,7 +159,7 @@ bool Board::destroyGems(bool animate)
     }
 
     AnimationManager& animator = AnimationManager::instance();
-    for (int i = 0; i < targets.size(); i++)
+    for (size_t i = 0; i < targets.size(); i++)
     {
         Match& match = targets[i];
         int targetSize = (int)match.size();
