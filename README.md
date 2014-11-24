@@ -19,7 +19,7 @@
 ### Visual Studio
 
 * tools:
-  * tested with Visual Studio 2013 Prof
+  * tested with Visual Studio 2013 Prof/Express, should work with 2010 and above (Prof/Express)
   * CMake 2.8.12 and above
 * cd build_folder
 * cmake -G"Visual Studio 12 Win64" PATH_TO_GEM_MINER_DIR
@@ -29,7 +29,7 @@
 ## Mac OSX
 
 * tools:
-  * Xcode
+  * Xcode 6.1
   * CMake 2.8.12 and above
 * cd build_folder
 * cmake -G"Xcode" PATH_TO_GEM_MINER_DIR
@@ -38,7 +38,7 @@
 ## iOS
 
 * dependencies:
-  * Xcode
+  * Xcode 6.1
 * open ios/GemMiner/GemMiner.xcodeproj
 
 ## Android
