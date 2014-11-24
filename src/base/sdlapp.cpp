@@ -1,12 +1,9 @@
 #include "sdlapp.h"
-
 #include "SDL.h"
-
 #include <iostream>
 #include <string>
 
 namespace base {
-
 
 SDLApp::SDLApp()
     : mainwindow_(nullptr)
@@ -59,13 +56,6 @@ void SDLApp::PumpEvents()
                         event.motion.y,
                         event.motion.xrel,
                         event.motion.yrel);
-
-            break;
-        case SDL_KEYDOWN:
-            OnKeyboardDown( ( u8 )event.key.keysym.sym );
-            break;
-        case SDL_KEYUP:
-            OnKeyboardUp( ( u8 )event.key.keysym.sym );
             break;
         default:
             break;
@@ -95,26 +85,12 @@ void SDLApp::OnMouseMove( i32 x, i32 y, i32 dx, i32 dy )
 {
 }
 
-void SDLApp::OnReshape( i32 width, i32 height )
-{
-}
-
-void SDLApp::OnKeyboardDown( u8 key )
-{
-}
-
-void SDLApp::OnKeyboardUp( u8 key )
-{
-}
-
 void SDLApp::OnMouseDown(i32 x, i32 y)
 {
-
 }
 
 void SDLApp::OnMouseUp(i32 x, i32 y)
 {
-
 }
 
 } // namespace base

@@ -11,8 +11,6 @@
 using namespace game;
 using namespace base;
 
-static SpriteFont* font = nullptr;
-
 Game::Game()
 {
     ResourceManager::init<Game*>(this);
@@ -22,7 +20,7 @@ Game::Game()
     background_ = new Sprite;
     background_->Init("BackGround.jpg");
     backgroundLayer->sprites.push_back(background_);
-    font = ResourceManager::instance().Font("agencyb.ttf");
+    font_ = ResourceManager::instance().Font("agencyb.ttf");
 
     srand((u32)time(NULL));
     board_ = new Board(8, 8);
@@ -44,7 +42,6 @@ void Game::OnFrame(float dt)
 {
     Update(dt);
     Render();
-    //SDLApp::OnFrame(dt);
 }
 
 void Game::Update(float dt)
@@ -79,11 +76,11 @@ void Game::Render()
         rect.h = 70;
         SDL_RenderFillRect(renderer_, &rect);
 
-        font->RenderText("Touch to Start", 300, 300);
+        font_->RenderText("Touch to Start", 300, 300);
     }
     else if (state_ == GameStates::Play) {
-        font->RenderText(timer_->GetText(), 100, 100);
-        font->RenderText(board_->GetScoresText(), 100, 150);
+        font_->RenderText(timer_->GetText(), 100, 100);
+        font_->RenderText(board_->GetScoresText(), 100, 150);
     }
     else if (state_ == GameStates::End) {
         SDL_Rect rect;
@@ -93,7 +90,7 @@ void Game::Render()
         rect.h = 105;
         SDL_RenderFillRect(renderer_, &rect);
 
-        font->RenderText("Game finished!\nYour score is " + board_->GetScoresText(), 300, 300);
+        font_->RenderText("Game finished!\nYour score is " + board_->GetScoresText(), 300, 300);
     }
 
     SDL_RenderPresent(renderer_);

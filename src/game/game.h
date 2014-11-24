@@ -6,6 +6,7 @@ namespace game {
 class Board;
 struct Sprite;
 class TimerDisplay;
+class SpriteFont;
 
 namespace GameStates
 {
@@ -38,6 +39,7 @@ protected:
     Board* board_;
     TimerDisplay* timer_;
     GameState state_;
+    SpriteFont* font_;
 };
 
 }

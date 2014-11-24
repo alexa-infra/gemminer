@@ -8,6 +8,7 @@ struct SDL_Renderer;
 
 namespace base {
 
+//! Shim for SDL functions and event loop
 class SDLApp
 {
 public:
@@ -19,12 +20,9 @@ protected:
     virtual void OnMouseMove( i32 x, i32 y, i32 dx, i32 dy );
     virtual void OnMouseDown(i32 x, i32 y);
     virtual void OnMouseUp(i32 x, i32 y);
-    virtual void OnReshape( i32 width, i32 height );
-    virtual void OnKeyboardDown( u8 key );
-    virtual void OnKeyboardUp( u8 key );
     void PumpEvents();
 protected:
-    SDL_Window* mainwindow_;     //!< window handle
+    SDL_Window* mainwindow_;
     SDL_Renderer* renderer_;
     bool run_;
     u32 width_;

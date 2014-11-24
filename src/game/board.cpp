@@ -17,6 +17,7 @@ std::string spriteNames[spriteCount] = {
     "Yellow.png"
 };
 
+// Animation durations
 const float Animation_Appear = 0.5f;
 const float Animation_Move = 0.25f;
 const float Animation_Destroy = 0.25f;
@@ -67,6 +68,7 @@ void Board::Fill()
             layer_->sprites.push_back(tile.sprite);
         }
     }
+    // initial board state should be 'clear', without matches
     while (DestroyGems(false)) {
         GenerateGems(false);
     }
@@ -116,6 +118,7 @@ bool Board::DestroyGems(bool animate)
     typedef std::vector<Tile*> Match;
     typedef std::vector<Match> Matches;
     Matches targets;
+    // matches in rows
     for (int i = 0; i < tx_; i++) {
         int prev = -1;
         Match target;
@@ -132,7 +135,7 @@ bool Board::DestroyGems(bool animate)
         if (target.size() >= 3)
             targets.push_back(target);
     }
-
+    // matches in columns
     for (int j = 0; j < ty_; j++) {
         int prev = -1;
         Match target;
@@ -149,7 +152,7 @@ bool Board::DestroyGems(bool animate)
         if (target.size() >= 3)
             targets.push_back(target);
     }
-
+    // remove all matches from board
     AnimationManager& animator = AnimationManager::instance();
     for (size_t i = 0; i < targets.size(); i++) {
         Match& match = targets[i];
@@ -157,7 +160,6 @@ bool Board::DestroyGems(bool animate)
         for (int j = 0; j < targetSize; j++) {
             Tile& tile = *match[j];
             tile.removed = true;
-
             if (animate) {
                 Color c = tile.sprite->color;
                 c.a = 0.0f;
@@ -293,11 +295,7 @@ void Board::ClickOn(Tile& tile)
 
 void Board::Move(Tile& a, Tile& b, bool animate)
 {
-    int i = a.i;
-    int j = a.j;
-    int i1 = b.i;
-    int j1 = b.j;
-    std::swap(tiles_[i][j], tiles_[i1][j1]);
+    std::swap(tiles_[a.i][a.j], tiles_[b.i][b.j]);
     std::swap(a.i, b.i);
     std::swap(a.j, b.j);
     if (animate) {
