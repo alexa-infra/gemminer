@@ -12,8 +12,15 @@ file(GLOB GAME_SRC ${SRC_PATH}/game/*.cpp)
 file(GLOB GAME_HDR ${SRC_PATH}/game/*.h)
 source_group("game" FILES ${GAME_SRC} ${GAME_HDR})
 
+file(GLOB DATA_FILES ${CMAKE_SOURCE_DIR}/game/*.*)
+
 set(SRC ${MAIN_SRC} ${BASE_SRC} ${GAME_SRC})
 set(HDR ${MAIN_HDR} ${BASE_HDR} ${GAME_HDR})
+
+if (APPLE)
+    set_source_files_properties(${DATA_FILES} PROPERTIES
+            MACOSX_PACKAGE_LOCATION .)
+endif()
 
 if(UNIX OR MINGW)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Werror -std=gnu++11")
@@ -29,31 +36,30 @@ if(WIN32 AND MSVC)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /WX")
     add_definitions(-D_CRT_SECURE_NO_WARNINGS -D_CRT_NONSTDC_NO_DEPRECATE)
 endif()
-set(CMAKE_DEBUG_POSTFIX "_d")
 
 include_directories(
     ${SRC_PATH}
     ${THIRDPARTY_PATH}/SDL2-2.0.3/include
     ${THIRDPARTY_PATH}/stb)
 
-add_executable(GemMiner ${SRC} ${HDR})
+if (NOT APPLE)
+    add_executable(GemMiner ${SRC} ${HDR})
+else()
+    add_executable(GemMiner MACOSX_BUNDLE ${SRC} ${HDR} ${DATA_FILES})
+endif()
+
 target_link_libraries(GemMiner SDL2 SDL2main)
 
-configure_file(
-    ${CMAKE_SOURCE_DIR}/cmake/project.vcxproj.user.in
-    ${CMAKE_CURRENT_BINARY_DIR}/GemMiner.vcxproj.user @ONLY)
+if (MSCV)
+    configure_file(
+        ${CMAKE_SOURCE_DIR}/cmake/project.vcxproj.user.in
+        ${CMAKE_CURRENT_BINARY_DIR}/GemMiner.vcxproj.user @ONLY)
+endif()
 
 install(TARGETS GemMiner
     RUNTIME DESTINATION bin
 )
 
-install(FILES
-    ${CMAKE_SOURCE_DIR}/data/BackGround.jpg
-    ${CMAKE_SOURCE_DIR}/data/Blue.png
-    ${CMAKE_SOURCE_DIR}/data/Green.png
-    ${CMAKE_SOURCE_DIR}/data/Purple.png
-    ${CMAKE_SOURCE_DIR}/data/Red.png
-    ${CMAKE_SOURCE_DIR}/data/Yellow.png
-    ${CMAKE_SOURCE_DIR}/data/agencyb.ttf
-    DESTINATION bin
-)
+if (NOT APPLE)
+    install(FILES ${DATA_FILES} DESTINATION bin)
+endif()
