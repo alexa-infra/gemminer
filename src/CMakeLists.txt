@@ -1,6 +1,6 @@
-set(SRC_PATH $ {CMAKE_CURRENT_SOURCE_DIR})
+set(SRC_PATH ${CMAKE_CURRENT_SOURCE_DIR})
 
-file(GLOB MAIN_SRC $ {SRC_PATH}/*.cpp)
+file(GLOB MAIN_SRC ${SRC_PATH}/*.cpp)
 file(GLOB MAIN_HDR ${SRC_PATH}/*.h)
 source_group("main" FILES ${MAIN_SRC} ${MAIN_HDR})
 
