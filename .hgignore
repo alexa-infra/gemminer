@@ -1,3 +1,7 @@
 ^_build/
 glob:.DS_Store
-^android
+^android-project/bin
+^android-project/gen
+^android-project/libs
+^android-project/obj
+
