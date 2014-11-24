@@ -14,7 +14,6 @@
 		F6FD0C971A2359A10013DC28 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6FD0C961A2359A10013DC28 /* QuartzCore.framework */; };
 		F6FD0C991A2359A60013DC28 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6FD0C981A2359A60013DC28 /* OpenGLES.framework */; };
 		F6FD0C9B1A2359E90013DC28 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F6FD0C9A1A2359E90013DC28 /* main.cpp */; };
-		F6FD0CA71A2359F90013DC28 /* fs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F6FD0C9E1A2359F90013DC28 /* fs.cpp */; };
 		F6FD0CA81A2359F90013DC28 /* sdlapp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F6FD0CA11A2359F90013DC28 /* sdlapp.cpp */; };
 		F6FD0CA91A2359F90013DC28 /* timer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F6FD0CA41A2359F90013DC28 /* timer.cpp */; };
 		F6FD0CBB1A235A090013DC28 /* animation_manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F6FD0CAB1A235A090013DC28 /* animation_manager.cpp */; };
@@ -64,8 +63,6 @@
 		F6FD0C981A2359A60013DC28 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		F6FD0C9A1A2359E90013DC28 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../../../src/main.cpp; sourceTree = "<group>"; };
 		F6FD0C9D1A2359F90013DC28 /* debug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = debug.h; sourceTree = "<group>"; };
-		F6FD0C9E1A2359F90013DC28 /* fs.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fs.cpp; sourceTree = "<group>"; };
-		F6FD0C9F1A2359F90013DC28 /* fs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fs.h; sourceTree = "<group>"; };
 		F6FD0CA01A2359F90013DC28 /* platform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = platform.h; sourceTree = "<group>"; };
 		F6FD0CA11A2359F90013DC28 /* sdlapp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sdlapp.cpp; sourceTree = "<group>"; };
 		F6FD0CA21A2359F90013DC28 /* sdlapp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sdlapp.h; sourceTree = "<group>"; };
@@ -183,8 +180,6 @@
 			isa = PBXGroup;
 			children = (
 				F6FD0C9D1A2359F90013DC28 /* debug.h */,
-				F6FD0C9E1A2359F90013DC28 /* fs.cpp */,
-				F6FD0C9F1A2359F90013DC28 /* fs.h */,
 				F6FD0CA01A2359F90013DC28 /* platform.h */,
 				F6FD0CA11A2359F90013DC28 /* sdlapp.cpp */,
 				F6FD0CA21A2359F90013DC28 /* sdlapp.h */,
@@ -328,7 +323,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				F6FD0CA81A2359F90013DC28 /* sdlapp.cpp in Sources */,
-				F6FD0CA71A2359F90013DC28 /* fs.cpp in Sources */,
 				F6FD0CBD1A235A090013DC28 /* game.cpp in Sources */,
 				F6FD0CBC1A235A090013DC28 /* board.cpp in Sources */,
 				F6FD0CC11A235A090013DC28 /* sprite_font.cpp in Sources */,
@@ -472,6 +466,7 @@
 				F6FD0C811A2358D60013DC28 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

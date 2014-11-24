@@ -5,4 +5,5 @@ glob:.DS_Store
 ^android-project/gen
 ^android-project/libs
 ^android-project/obj
-
+glob:*.xcworkspace
+glob:*.xcuserdatad
