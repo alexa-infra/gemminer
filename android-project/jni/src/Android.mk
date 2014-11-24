@@ -17,7 +17,6 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/$(SDL_PATH)/include \
 # Add your application source files here...
 LOCAL_SRC_FILES := $(SDL_PATH)/src/main/android/SDL_android_main.c \
 	$(GEMMINER_SRC)/main.cpp \
-	$(GEMMINER_SRC)/base/fs.cpp \
 	$(GEMMINER_SRC)/base/sdlapp.cpp \
 	$(GEMMINER_SRC)/base/timer.cpp \
 	$(GEMMINER_SRC)/game/sprite_font.cpp \
