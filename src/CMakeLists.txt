@@ -50,10 +50,13 @@ endif()
 
 target_link_libraries(GemMiner SDL2 SDL2main)
 
-if (MSCV)
+if (MSVC)
     configure_file(
         ${CMAKE_SOURCE_DIR}/cmake/project.vcxproj.user.in
         ${CMAKE_CURRENT_BINARY_DIR}/GemMiner.vcxproj.user @ONLY)
+    add_custom_command(TARGET GemMiner POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_SOURCE_DIR}/data ${CMAKE_CURRENT_BINARY_DIR}/\$\(Configuration\)/)
 endif()
 
 if (NOT APPLE)
